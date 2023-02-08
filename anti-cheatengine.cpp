@@ -6,10 +6,10 @@
 
 
 bool LoopProcess() {
-	PROCESSENTRY32 pe32;
-	std::vector<std::string> pids;
+	PROCESSENTRY32 pe32; //creating a process structure for process information
+	std::vector<std::string> pids;//our array to store the process names.
 
-
+	//takes a snapshot of all currently running processes.
 	HANDLE Csnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 	if (Csnapshot == INVALID_HANDLE_VALUE) {
 		std::cout << "Csnapshot was invalid! -> loopProcess\n";
@@ -17,8 +17,9 @@ bool LoopProcess() {
 		exit(1);
 	}
 
-	pe32.dwSize = sizeof(PROCESSENTRY32);
+	pe32.dwSize = sizeof(PROCESSENTRY32);//has to be set or else process32first fails!
 
+	//call this before process32next
 	if (!Process32First(Csnapshot, &pe32)) {
 		std::cout << "Process32First was not successful!\n";
 		CloseHandle(Csnapshot);
@@ -26,7 +27,7 @@ bool LoopProcess() {
 		exit(1);
 	}
 
-	//loop proccess
+	//loop proccess after calling process32first
 	do
 	{
 		pids.push_back(pe32.szExeFile); //put all the processes into a array
@@ -45,7 +46,7 @@ bool LoopProcess() {
 		}
 	}
 
-	CloseHandle(Csnapshot);
+	CloseHandle(Csnapshot);//Close the gateway because we don't need it anymore.
 
 	return 0;
 }
