@@ -8,3 +8,12 @@ Make sure C++ date is 17-20-latest.
 Finally build and run.
 
 Program should not detect cheat engine until its running or opened.
+
+Also this is just a simple way to detect any process. 
+I like to call this the lazy way.
+
+Cool things you could possibly make on your own is to put 
+every known enemy process name into a array of strings and parse through them.
+
+example:
+std::vector<std::string> knownProcs = {"CheatEngine", "Reclass.NET", "OllyDbg", "x64dbg"};
